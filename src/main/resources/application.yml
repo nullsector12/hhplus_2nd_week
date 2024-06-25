@@ -1,1 +1,9 @@
-spring.application.name=lecture
+spring:
+  application.name: lecture
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  h2:
+    console:
+      enabled: true
