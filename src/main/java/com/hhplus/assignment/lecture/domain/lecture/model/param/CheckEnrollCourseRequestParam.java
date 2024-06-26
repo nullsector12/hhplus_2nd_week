@@ -5,8 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class LectureEnrollRequestParam {
+public class CheckEnrollCourseRequestParam {
 
     private Long courseId;
-
 }

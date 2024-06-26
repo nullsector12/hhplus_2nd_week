@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor(access = lombok.AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Entity
 public class Lecture {
 
@@ -19,16 +20,12 @@ public class Lecture {
 
     private String title;
 
-    @Column(name = "max_student_count")
-    private int maxStudentCount;
-
     @Column(name = "created_at", columnDefinition = "DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3)")
     private LocalDateTime createdAt;
 
     @Builder
-    public Lecture (String title, int maxStudentCount) {
+    public Lecture(String title) {
         this.title = title;
-        this.maxStudentCount = maxStudentCount;
     }
 
 }

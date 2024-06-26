@@ -15,11 +15,11 @@ import java.time.LocalDateTime;
 @Entity
 @Embeddable
 @EqualsAndHashCode(of={"id"})
-public class LectureEnrollmentList {
+public class LectureEnrollmentHistory {
 
     @EmbeddedId
     private LectureEnrollmentId id;
 
-    @Column(name = "enrolled_at")
+    @Column(name = "enrolled_at", columnDefinition = "DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3)")
     private LocalDateTime enrolledAt;
 }
