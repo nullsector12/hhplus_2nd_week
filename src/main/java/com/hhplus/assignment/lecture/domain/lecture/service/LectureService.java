@@ -41,7 +41,9 @@ public class LectureService {
 
         // openCourseId 에 해당하는 개설강의를 가져온다.
         // openCourseId 에 해당하는 특강의 수강신청 인원을 가져온다.
-        OpenCourseDto course = openCourseRepository.findById(request.getCourseId());
+//        OpenCourseDto course = openCourseRepository.findById(request.getCourseId());
+        // 비관락 적용
+        OpenCourseDto course = openCourseRepository.findByIdForUpdate(request.getCourseId());
         // case 2. 수강신청 인원이 30명 이상인 경우
         // 해당 lectureId에 해당하는 특강의 수강신청 인원이 30명 이상일 경우, 수강신청 인원이 초과되었다는 에러 메시지를 반환한다.
         if (openCourseRepository.isFull(course.getMaxStudentCount(), course.getCapacity())) {

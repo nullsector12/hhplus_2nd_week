@@ -30,6 +30,9 @@ public class OpenCourse {
     private LocalDateTime openAt;
 
     public void increaseEnrolledStudentCount(int studentCount) {
+        if(studentCount > this.maxStudentCount) {
+            throw new IllegalArgumentException("수강생이 정원을 초과했습니다.");
+        }
         this.capacity = studentCount;
     }
 

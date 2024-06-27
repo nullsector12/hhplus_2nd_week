@@ -1,7 +1,6 @@
 package com.hhplus.assignment.lecture.domain.lecture.repository;
 
 import com.hhplus.assignment.lecture.domain.lecture.model.dto.OpenCourseDto;
-import com.hhplus.assignment.lecture.domain.lecture.model.param.LectureOpenCourseSearchRequestParam;
 import com.hhplus.assignment.lecture.domain.lecture.model.param.OpenCourseResisterRequestParam;
 
 import java.util.List;
@@ -10,6 +9,8 @@ public interface OpenCourseRepository {
 
     // 개설 강의 찾기
     OpenCourseDto findById(Long courseId);
+
+    OpenCourseDto findByIdForUpdate(Long courseId);
 
     // 개설 강의 전체 찾기
     List<OpenCourseDto> findAllById(Long lectureId);
@@ -22,5 +23,6 @@ public interface OpenCourseRepository {
 
     OpenCourseDto increaseEnrollStudentCount(Long courseId);
 
+    void deleteAllCourses();
 
 }
