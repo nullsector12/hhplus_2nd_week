@@ -26,7 +26,7 @@ public class LectureController {
      * 어떤 유저가 특강을 신청했는지 히스토리 필요
      * */
     @PostMapping("/{userId}")
-    public GenericResponse enrollLecture(@PathVariable Long userId, @RequestBody LectureEnrollRequestParam param) {
+    public GenericResponse enrollLecture(@PathVariable("userId") Long userId, @RequestBody LectureEnrollRequestParam param) {
         // 특강 신청
         return DataResponse.create(lectureService.enrollLecture(userId, param));
     }
@@ -34,7 +34,7 @@ public class LectureController {
     /*
     * 2. 특강 목록
     * */
-    @GetMapping
+    @GetMapping("")
     public GenericResponse getLectureCourses(LectureOpenCourseSearchRequestParam param) {
         // 특강 목록 조회
         return DataResponse.create(lectureService.openCourseList(param));
@@ -45,7 +45,7 @@ public class LectureController {
      * 3. 특강 신청완료 확인
      * */
     @GetMapping("/enroll/{userId}")
-    public GenericResponse getLectureEnrollHistory(@PathVariable Long userId, CheckEnrollCourseRequestParam param) {
+    public GenericResponse getLectureEnrollHistory(@PathVariable("userId") Long userId, CheckEnrollCourseRequestParam param) {
         // 특강 신청 내역 조회
         return DataResponse.create(lectureService.checkEnrolledCourse(userId, param));
     }

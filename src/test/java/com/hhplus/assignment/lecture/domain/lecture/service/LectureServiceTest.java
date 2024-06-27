@@ -10,9 +10,7 @@ import com.hhplus.assignment.lecture.domain.lecture.model.entity.OpenCourse;
 import com.hhplus.assignment.lecture.domain.lecture.model.param.CheckEnrollCourseRequestParam;
 import com.hhplus.assignment.lecture.domain.lecture.model.param.LectureEnrollRequestParam;
 import com.hhplus.assignment.lecture.domain.lecture.model.param.LectureOpenCourseSearchRequestParam;
-import com.hhplus.assignment.lecture.domain.lecture.repository.LectureEnrollHistoryRepositoryImpl;
-import com.hhplus.assignment.lecture.domain.lecture.repository.LectureRepositoryImpl;
-import com.hhplus.assignment.lecture.domain.lecture.repository.OpenCourseRepositoryImpl;
+import com.hhplus.assignment.lecture.domain.lecture.repository.*;
 import com.hhplus.assignment.lecture.exception.LectureException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,13 +32,10 @@ import static org.mockito.Mockito.when;
 public class LectureServiceTest {
 
     @Mock
-    private LectureRepositoryImpl lectureRepository;
+    private LectureEnrollHistoryRepository lectureEnrollHistoryRepository;
 
     @Mock
-    private LectureEnrollHistoryRepositoryImpl lectureEnrollHistoryRepository;
-
-    @Mock
-    private OpenCourseRepositoryImpl openCourseRepository;
+    private OpenCourseRepository openCourseRepository;
 
     @InjectMocks
     private LectureService lectureService;
@@ -89,7 +84,8 @@ public class LectureServiceTest {
         when(openCourseRepository.findById(openCourseId)).thenReturn(openCourse);
 
         // when
-        when(openCourseRepository.isFull(openCourse.getMaxStudentCount(), openCourse.getCapacity())).thenThrow(new LectureException(HttpStatus.BAD_REQUEST, "FULL_CAPACITY", "수강 정원이 가득찼습니다."));
+        when(openCourseRepository.isFull(openCourse.getMaxStudentCount(), openCourse.getCapacity()))
+                .thenThrow(new LectureException(HttpStatus.BAD_REQUEST, "FULL_CAPACITY", "수강 정원이 가득찼습니다."));
 
         // then
         Assertions.assertThrows(LectureException.class, () -> lectureService.enrollLecture(userId, request));
@@ -107,7 +103,8 @@ public class LectureServiceTest {
         when(openCourseRepository.findById(openCourseId)).thenReturn(openCourse);
 
         // when
-        when(lectureEnrollHistoryRepository.isAlreadyEnrolled(userId, openCourse.getCourseId())).thenReturn(true).thenThrow(new LectureException(HttpStatus.BAD_REQUEST, "ALREADY_ENROLLED", "이미 수강신청한 특강입니다."));
+        when(lectureEnrollHistoryRepository.isAlreadyEnrolled(userId, openCourse.getCourseId())).thenReturn(true)
+                .thenThrow(new LectureException(HttpStatus.BAD_REQUEST, "ALREADY_ENROLLED", "이미 수강신청한 특강입니다."));
 
         // then
         Assertions.assertThrows(LectureException.class, () -> lectureService.enrollLecture(userId, request));
@@ -145,7 +142,8 @@ public class LectureServiceTest {
         CheckEnrollCourseRequestParam param = new CheckEnrollCourseRequestParam(openCourseId);
 
         // when
-        when(lectureEnrollHistoryRepository.findByEnrollmentId(lectureEnrollmentId)).thenThrow(new LectureException(HttpStatus.NOT_FOUND, "HISTORY_NOT_FOUND", "해당 강의 수강 내역이 존재하지 않습니다."));
+        when(lectureEnrollHistoryRepository.findByEnrollmentId(lectureEnrollmentId))
+                .thenThrow(new LectureException(HttpStatus.NOT_FOUND, "HISTORY_NOT_FOUND", "해당 강의 수강 내역이 존재하지 않습니다."));
 
         // then
         Assertions.assertThrows(LectureException.class, () -> lectureService.checkEnrolledCourse(userId, param));
@@ -163,11 +161,10 @@ public class LectureServiceTest {
         when(lectureEnrollHistoryRepository.findByEnrollmentId(lectureEnrollmentId)).thenReturn(lectureEnrollHistory);
 
         // when
-        LectureEnrollHistoryDto result = lectureService.checkEnrolledCourse(userId, param);
+        LectureResponse<LectureEnrollHistoryDto> result = lectureService.checkEnrolledCourse(userId, param);
 
         // then
-        assertThat(result.getUserId()).isEqualTo(userId);
-        assertThat(result.getCourseId()).isEqualTo(openCourseId);
+        assertThat(result.getData().getUserId()).isEqualTo(userId);
+        assertThat(result.getData().getCourseId()).isEqualTo(openCourseId);
     }
-
 }

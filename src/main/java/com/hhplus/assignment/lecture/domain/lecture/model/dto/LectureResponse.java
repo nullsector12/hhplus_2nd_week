@@ -1,6 +1,5 @@
 package com.hhplus.assignment.lecture.domain.lecture.model.dto;
 
-import com.hhplus.assignment.lecture.exception.LectureException;
 import lombok.Data;
 
 @Data
@@ -16,9 +15,5 @@ public class LectureResponse<T> {
 
     public static <T> LectureResponse<T> of(T data, String message) {
         return new LectureResponse<>(data, message);
-    }
-
-    public Throwable getException() {
-        return (LectureException) data;
     }
 }
