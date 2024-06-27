@@ -10,9 +10,7 @@ import com.hhplus.assignment.lecture.domain.lecture.model.entity.OpenCourse;
 import com.hhplus.assignment.lecture.domain.lecture.model.param.CheckEnrollCourseRequestParam;
 import com.hhplus.assignment.lecture.domain.lecture.model.param.LectureEnrollRequestParam;
 import com.hhplus.assignment.lecture.domain.lecture.model.param.LectureOpenCourseSearchRequestParam;
-import com.hhplus.assignment.lecture.domain.lecture.repository.LectureEnrollHistoryRepositoryImpl;
-import com.hhplus.assignment.lecture.domain.lecture.repository.LectureRepositoryImpl;
-import com.hhplus.assignment.lecture.domain.lecture.repository.OpenCourseRepositoryImpl;
+import com.hhplus.assignment.lecture.domain.lecture.repository.*;
 import com.hhplus.assignment.lecture.exception.LectureException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,13 +32,10 @@ import static org.mockito.Mockito.when;
 public class LectureServiceTest {
 
     @Mock
-    private LectureRepositoryImpl lectureRepository;
+    private LectureEnrollHistoryRepository lectureEnrollHistoryRepository;
 
     @Mock
-    private LectureEnrollHistoryRepositoryImpl lectureEnrollHistoryRepository;
-
-    @Mock
-    private OpenCourseRepositoryImpl openCourseRepository;
+    private OpenCourseRepository openCourseRepository;
 
     @InjectMocks
     private LectureService lectureService;

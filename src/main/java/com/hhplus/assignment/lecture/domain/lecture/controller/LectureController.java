@@ -34,7 +34,7 @@ public class LectureController {
     /*
     * 2. 특강 목록
     * */
-    @GetMapping
+    @GetMapping("")
     public GenericResponse getLectureCourses(LectureOpenCourseSearchRequestParam param) {
         // 특강 목록 조회
         return DataResponse.create(lectureService.openCourseList(param));
